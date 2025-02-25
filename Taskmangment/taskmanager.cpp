@@ -18,7 +18,12 @@ TaskManager:: TaskManager(TaskManager && other) noexcept {
     t_tasks = std::move(other.t_tasks);
 }
 
-TaskManager::~TaskManager(){}
+TaskManager::~TaskManager(){
+    for(int i = 0,i < t_users;++i)
+    {
+        delete t_users[i];
+    }
+}
 
 void TaskManager:: registerUser(const std::string& username, const std::string& password){
    User* u=(new User(ganarateuserid(),username,password));

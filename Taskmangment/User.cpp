@@ -13,16 +13,39 @@ User:: User(int id,const std::string& username, const std::string& password):Use
 
 User:: User(User && other)//move constructor
 {
+    m_username = std::move(other.m_username);
+    m_password = std::move(other.m_password);
+    m_tasks = std::move(other.m_tasks);
+    m_is_loggedin = other.m_is_loggedin;
+    m_id = 0;
+    m_is_loggedin = false;
+}
+
+User:: ~User(){}  
+// User& User:: operator= (const User& other)
+// {
+//     if(m_id == other.m_id)
+//     {
+//        return *this;   
+//     }
+//     for(int i = 0; i < m_tasks.size();++i )
+//     {
+//         delete m_tasks[i];
+//         m_tasks[i]= new Task( *(other.m_tasks[i]) );
+//     }
+//     return *this;
+// } 
+User& User:: operator=(User && other)
+{
     m_id = other.m_id;
     m_username = std::move(other.m_username);
     m_password = std::move(other.m_password);
     m_tasks = std::move(other.m_tasks);
     m_is_loggedin = other.m_is_loggedin;
-    m_id=0;
-    m_is_loggedin=false;
-}
+    m_id = 0;
+    m_is_loggedin = false;
+} 
 
-User:: ~User(){}  
 
 bool User:: correctUsername(const std::string & username){
     return (m_username == username);

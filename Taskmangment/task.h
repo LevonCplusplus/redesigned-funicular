@@ -27,7 +27,10 @@ class Task{
     void setprio(int);
     void  edit(const std::string& newTitle, const std::string& newDescription, const std::string& newDeadline, const std::string& newCategory, int newPriority, int newstatus, bool newcompleted);
     void displayTask() const;
-  
+    bool operator==(const Task & obj2);
+    bool operator!=(const Task & obj2);
+    Task& operator++();
+    
   };
 
 #endif

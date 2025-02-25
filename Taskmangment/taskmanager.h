@@ -1,6 +1,10 @@
  #ifndef TASKMANAGER
  #define TASKMANAGER
-#include "header.h"
+ #include <iostream>
+ #include <vector>
+ #include <string>
+ #include "User.h"
+ #include "task.h"
 class TaskManager{
     std::vector<User*> t_users;
     std::vector<Task*> t_tasks;

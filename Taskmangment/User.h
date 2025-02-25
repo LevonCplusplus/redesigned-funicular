@@ -16,6 +16,7 @@ public:
     void login();
     bool correctPassword(const std::string &);
     void logout();  
+    User& operator=(User && other);
     void addTask(Task*);
     void deletetask(int);
     void editTask(Task* t, const Task& updatedtask);

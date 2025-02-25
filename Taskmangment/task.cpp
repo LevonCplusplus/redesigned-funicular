@@ -11,8 +11,8 @@ Task::Task(const std::string& title, const std::string& description, const std::
     m_description = description;
     m_deadline = deadline;
     m_category = category;
-    m_priority =static_cast<Priority> (priority);
-    m_status =static_cast<Status> (status);
+    m_priority = static_cast<Priority> (priority);
+    m_status = static_cast<Status> (status);
     m_completed = completed;
 
 }
@@ -35,8 +35,8 @@ Task:: Task(Task&& other) noexcept{
     m_description = std::move(other.m_description);
     m_deadline = std::move(other.m_deadline);
     m_category = std::move(other.m_category);
-    m_priority = other.m_priority;
-    m_status = other.m_status;
+    m_priority = std::move(other.m_priority);
+    m_status = std::move(other.m_status);
     m_completed = other.m_completed;
 
 }
@@ -92,3 +92,27 @@ void Task:: displayTask() const{
 }
 Task::~Task()
   {}
+
+//operator overloading
+bool Task:: operator==(const Task & obj2)
+{
+    return (m_task_id == obj2.m_task_id);
+}
+bool Task:: operator!=(const Task & obj2)
+{
+    return (m_task_id == obj2.m_task_id);
+}
+Task& Task:: operator++(){
+
+    int n = static_cast <int>m_priority;
+    n++;
+    m_priority = static_cast <Priority> n;
+    return *this;
+}
+const Task Task:: operator++(int){
+   Task t(*this);
+   int n = static_cast <int>m_priority;
+    n++;
+    m_priority = static_cast <Priority> n;
+
+}
