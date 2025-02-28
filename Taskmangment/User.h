@@ -10,6 +10,8 @@ class User{
 public:
     User();
     User(int m_id,const std::string& username, const std::string& password);
+    User& operator= (const User& other) = delete;
+    User(const User& other) = delete;
     User(User && other);
     ~User();
     bool correctUsername(const std:: string&);

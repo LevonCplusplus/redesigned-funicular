@@ -19,7 +19,7 @@ TaskManager:: TaskManager(TaskManager && other) noexcept {
 }
 
 TaskManager::~TaskManager(){
-    for(int i = 0,i < t_users;++i)
+    for(int i = 0;i < t_users.size();++i)
     {
         delete t_users[i];
     }
@@ -32,7 +32,7 @@ void TaskManager:: registerUser(const std::string& username, const std::string& 
 }
 int TaskManager:: ganarateuserid()
 { 
-    static int a=4251637849;
+    static int a = 1;
     return a++;
 }
 bool TaskManager:: login(const std::string& username, const std::string& password){

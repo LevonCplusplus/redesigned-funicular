@@ -25,12 +25,15 @@ class Task{
     void markCompleted();
     void setstatus(int);
     void setprio(int);
+    void setuserid(int);
     void  edit(const std::string& newTitle, const std::string& newDescription, const std::string& newDeadline, const std::string& newCategory, int newPriority, int newstatus, bool newcompleted);
     void displayTask() const;
     bool operator==(const Task & obj2);
     bool operator!=(const Task & obj2);
     Task& operator++();
-    
+    friend std::ostream&   operator<<(std::ostream & ost,const Task & obj);
+    friend std::istream&   operator>>(std::istream & ost,Task & obj);
+    const Task  operator++(int);
   };
 
 #endif

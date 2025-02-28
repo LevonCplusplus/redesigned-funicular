@@ -7,14 +7,17 @@
 
 int main()
 {
-  Task BITSET("BItset", "description", "21.06","category",3,2,false);
-  Task BITSET2("BItset1", "description1", "21.061","category1",1,3,false);
+  Task* BITSET = new Task{};
+  std::cin >> *BITSET;
+  Task* BITSET2 = new Task{};
+  std::cin >> *BITSET2;
+  TaskManager Manager;
+  Manager.registerUser("levon","varosyan");
+  Manager.addtask(BITSET2);
+  Manager.addtask(BITSET);
+  Manager.addTaskForUser(1,BITSET);
+  std::cout<<*BITSET;
+  std::cout<<*BITSET2;
 
-  TaskManager poxos;
-  poxos.registerUser("levon","varosyan");
-  poxos.addtask(&BITSET2);
-  poxos.addtask(&BITSET);
-  poxos.addTaskForUser(4251637849,&BITSET);
-  poxos.displayTasksForUser(4251637849);
   return 0;
 }

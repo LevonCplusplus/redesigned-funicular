@@ -21,8 +21,12 @@ User:: User(User && other)//move constructor
     m_is_loggedin = false;
 }
 
-User:: ~User(){}  
-// User& User:: operator= (const User& other)
+User:: ~User(){
+    for(int i = 0; i < m_tasks.size();++i )
+    {
+        delete m_tasks[i];
+    }
+}  
 // {
 //     if(m_id == other.m_id)
 //     {
@@ -44,6 +48,7 @@ User& User:: operator=(User && other)
     m_is_loggedin = other.m_is_loggedin;
     m_id = 0;
     m_is_loggedin = false;
+    return *this;
 } 
 
 
@@ -61,6 +66,7 @@ void User:: addTask( Task* k){
      {
         exit(-1);
      }
+     k->setuserid(m_id);
     m_tasks.push_back(k);
 }
 
@@ -81,7 +87,9 @@ void User:: editTask(Task * t, const Task& updatedtask){
 Task* User:: searchtask(int taskid){
 
     for(int i = 0; i < m_tasks.size(); ++i)
-    {
+    {for(int i = 0; i < m_tasks.size();++i )
+        //     {
+        //         delete m_tasks[i];
         if(m_tasks[i]->getid() == taskid)
         {
             return m_tasks[i];
