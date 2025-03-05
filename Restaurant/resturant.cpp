@@ -5,9 +5,9 @@
 #include "order.h"
 #include "menu.h"
     
-Restaurant():m_customers(0),m_orders(0),m_menu{}
+Restaurant:: Restaurant():m_customers(0),m_orders(0),m_menu{}
 {}
-Restaurant(const Restaurant& other){
+Restaurant:: Restaurant(const Restaurant& other){
     m_menu = other.m_menu;
     
     for(int i = 0;i < m_customers; ++i )
@@ -15,29 +15,29 @@ Restaurant(const Restaurant& other){
       m_customers
     }
 }
-Restaurant& operator=(const Restaurant& other){
+Restaurant& Restaurant:: operator=(const Restaurant& other){
              
 }
-Restaurant(Restaurant&& other) noexcept{
+Restaurant:: Restaurant(Restaurant&& other) noexcept{
     m_menu = std::move(other.m_menu);
     m_customers = std::move(other.m_customers);
     m_orders = std::move(other.m_orders);
 }
-Restaurant& operator=(Restaurant&& other) noexcept{
+Restaurant& Restaurant:: operator=(Restaurant&& other) noexcept{
     m_menu = std::move(other.m_menu);
     m_customers = std::move(other.m_customers);
     m_orders = std::move(other.m_orders);
 }
-~Restaurant(){
+Restaurant:: ~Restaurant(){
     for(int i = 0;i < m_customers.size(); ++i )
     {
         delete [] m_customers[i];
     }
 }
-void showMenu() const{
+void Restaurant:: showMenu() const{
     m_menu.displayMenu();
 }
-Customer* getCustomerByName(const std::string& name){
+Customer* Restaurant:: getCustomerByName(const std::string& name){
     for(int i = 0;i < m_customers.size(); ++i )
     {
         if( m_customers[i] -> getName() == name )
@@ -46,7 +46,7 @@ Customer* getCustomerByName(const std::string& name){
         }
     }
 }
-void placeNewOrder(const std::string& customerName){
+void Restaurant:: placeNewOrder(const std::string& customerName){
     for(int i = 0;i < m_customers.size(); ++i )
     {
         if( m_customers[i] -> getName() == customerName )
@@ -55,7 +55,7 @@ void placeNewOrder(const std::string& customerName){
         }
     }
 }
-void viewCustomerOrderHistory(const std::string& customerName) const{
+void Restaurant:: viewCustomerOrderHistory(const std::string& customerName) const{
     for(int i = 0;i < m_customers.size(); ++i )
     {
         if( m_customers[i] -> getName() == customerName )

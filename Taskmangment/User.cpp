@@ -11,7 +11,7 @@ User:: User(int id,const std::string& username, const std::string& password):Use
   m_password = password;
 }
 
-User:: User(User && other)//move constructor
+User:: User(User && other) noexcept
 {
     m_username = std::move(other.m_username);
     m_password = std::move(other.m_password);
@@ -21,26 +21,12 @@ User:: User(User && other)//move constructor
     m_is_loggedin = false;
 }
 
-User:: ~User(){
-    for(int i = 0; i < m_tasks.size();++i )
-    {
-        delete m_tasks[i];
-    }
-}  
-// {
-//     if(m_id == other.m_id)
-//     {
-//        return *this;   
-//     }
-//     for(int i = 0; i < m_tasks.size();++i )
-//     {
-//         delete m_tasks[i];
-//         m_tasks[i]= new Task( *(other.m_tasks[i]) );
-//     }
-//     return *this;
-// } 
-User& User:: operator=(User && other)
+User& User:: operator=(User && other)noexcept
 {
+    if(this == &other)
+    {
+        exit(-1);
+    }
     m_id = other.m_id;
     m_username = std::move(other.m_username);
     m_password = std::move(other.m_password);
@@ -50,7 +36,7 @@ User& User:: operator=(User && other)
     m_is_loggedin = false;
     return *this;
 } 
-
+User:: ~User(){}  
 
 bool User:: correctUsername(const std::string & username){
     return (m_username == username);
@@ -80,21 +66,21 @@ void User:: deletetask(int taskid)
         return;
       }
     }
+    std::cout << "no such a task" << std::endl;
 }
 void User:: editTask(Task * t, const Task& updatedtask){
     (*t) = updatedtask; 
 }
 Task* User:: searchtask(int taskid){
-
-    for(int i = 0; i < m_tasks.size(); ++i)
-    {for(int i = 0; i < m_tasks.size();++i )
-        //     {
-        //         delete m_tasks[i];
+ 
+    for(int i = 0; i < m_tasks.size();++i ){
+        
         if(m_tasks[i]->getid() == taskid)
         {
             return m_tasks[i];
         }
     }
+    std::cout<<"no such a task"<<std::endl;
     return nullptr;
 }
 void User:: login(){
@@ -106,14 +92,15 @@ void User:: logout(){
     m_is_loggedin = false;
 }
 void User:: listTasks() const{
-       
    for(int i = 0;i < m_tasks.size(); ++i)
    {
      m_tasks[i]->displayTask();
    }
-
 }
 int User:: getuserid()const{
     return m_id;
 }
-
+User::operator bool()const
+{
+    return m_is_loggedin;
+}

@@ -6,31 +6,43 @@
 #include "taskmanager.h"
 TaskManager:: TaskManager():t_users(0),t_tasks(0){}
   
-TaskManager:: TaskManager(const TaskManager& other){
-
-    t_users = other.t_users;
-    t_tasks = other.t_tasks;
-}
+// TaskManager:: TaskManager(const TaskManager& other){
+    
+//     t_users = other.t_users;
+//     t_tasks = other.t_tasks;
+// }
 
 TaskManager:: TaskManager(TaskManager && other) noexcept {
 
     t_users = std::move(other.t_users);
     t_tasks = std::move(other.t_tasks);
 }
-
+TaskManager& TaskManager::operator=(TaskManager && other) noexcept {
+    if(this == &other)
+    {
+        exit(-1);
+    }
+    t_users = std::move(other.t_users);
+    t_tasks = std::move(other.t_tasks);
+    return *this;
+}
 TaskManager::~TaskManager(){
     for(int i = 0;i < t_users.size();++i)
     {
-        delete t_users[i];
+        delete [] t_users[i];
+    }
+    for(int i = 0;i < t_tasks.size();++i)
+    {
+        delete [] t_tasks[i];
     }
 }
 
 void TaskManager:: registerUser(const std::string& username, const std::string& password){
-   User* u=(new User(ganarateuserid(),username,password));
+   User* u=(new User(generateuserid(),username,password));
     t_users.push_back(u);
-
+    
 }
-int TaskManager:: ganarateuserid()
+int TaskManager:: generateuserid()
 { 
     static int a = 1;
     return a++;
@@ -77,12 +89,13 @@ void TaskManager:: addTaskForUser(const int userid,Task* t){
     {
         exit(-1);
     } 
-
-    for(int i = 0;i < t_users.size(); ++i)
+   std::cout<< "task added"<<std::endl;
+    for(int i = 0; i < t_users.size(); ++i)
      {
         if(userid == t_users[i]->getuserid())
         {
-            t_users[i]->addTask(t);
+
+            t_users[i] -> addTask(t);
             addtask(t);
             return;
         }
@@ -97,12 +110,12 @@ void  TaskManager :: deleteTaskForUser(const int taskid){
         Task * t = t_users[i]->searchtask(taskid);
         if( t )
         {
-            t_users[i]->deletetask(taskid);
+            t_users[i]-> deletetask(taskid);
             break;
 
         }
-
     }
+   std::cout<<"no such a task"<<std::endl;
     
 } 
 
@@ -110,7 +123,7 @@ void TaskManager:: editTaskForUser(int taskid, const Task& updatedTask)
 {
     for(int i = 0;i < t_users.size(); ++i)
     {
-        Task * t = t_users[i]->searchtask(taskid);
+        Task * t = t_users[i] -> searchtask(taskid);
         if(t)
         {
             (*t) = updatedTask;
@@ -127,3 +140,27 @@ void TaskManager:: displayTasksForUser(int userid) const{
         }
     }
 }
+// void TaskManager::save(User* obj) {
+//     std::ofstream fout("shadow.txt", std::ios::binary | std::ios::app); 
+//     if (fout.is_open()) {
+//         fout.write(reinterpret_cast<char*>(obj), sizeof(User)); 
+//         fout.close();
+//     } else {
+//         std::cout << "Error opening file for writing." << std::endl;
+//     }
+//     std::cout << "Data saved." << std::endl;
+// }
+
+// void TaskManager::display() {
+//     std::ifstream fin("shadow.txt", std::ios::binary);
+//     if (fin.is_open()) {
+//         User* u = new User{} ;
+//         while (fin.read(reinterpret_cast<char*>(u), sizeof(*u))){
+//             //fin.read(reinterpret_cast<char*>(&u), sizeof(u));  
+//             u->listTasks();  
+//         }
+//         fin.close();
+//     } else {
+//         std::cout << "Error opening file for reading." << std::endl;
+//     }
+// }

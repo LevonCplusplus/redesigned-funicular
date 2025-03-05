@@ -7,17 +7,29 @@
 
 int main()
 {
-  Task* BITSET = new Task{};
-  std::cin >> *BITSET;
-  Task* BITSET2 = new Task{};
-  std::cin >> *BITSET2;
-  TaskManager Manager;
-  Manager.registerUser("levon","varosyan");
-  Manager.addtask(BITSET2);
-  Manager.addtask(BITSET);
-  Manager.addTaskForUser(1,BITSET);
-  std::cout<<*BITSET;
-  std::cout<<*BITSET2;
+  Task BITSET {};
+  std::cin >> BITSET;
+   
+   
+   std::cout <<++BITSET;
+    // BITSET.markCompleted();
+    // BITSET. setstatus(int);
+    // BITSET.setprio(int);
+    // BITSET. setuserid(int);
+    // BITSET. edit(const std::string& newTitle, const std::string& newDescription, const std::string& newDeadline, const std::string& newCategory, int newPriority, int newstatus, bool newcompleted);
+    // BITSET. displayTask() const;
+    
+    
+    // Task& operator++();
+    // const Task  operator++(int);
+    // bool operator>(const Task& other);
+    // bool operator<(const Task& other);
+    // Task&  operator--();
+    // const Task operator--(int);
+  
+
+
+  
 
   return 0;
 }

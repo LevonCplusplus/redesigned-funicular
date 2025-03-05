@@ -18,8 +18,9 @@ class Task{
     Task(const Task& other); 
     Task& operator=(const Task&); 
     Task(Task&& other) noexcept; 
+    Task& operator=(Task&& other) noexcept;
     ~Task();
-    int ganaratetaskid();
+    int generatetaskid();
     int gettaskuserid()const;
     int getid()const;
     void markCompleted();
@@ -28,12 +29,17 @@ class Task{
     void setuserid(int);
     void  edit(const std::string& newTitle, const std::string& newDescription, const std::string& newDeadline, const std::string& newCategory, int newPriority, int newstatus, bool newcompleted);
     void displayTask() const;
-    bool operator==(const Task & obj2);
-    bool operator!=(const Task & obj2);
-    Task& operator++();
+    bool operator==(const Task & obj2)const;
+    bool operator!=(const Task & obj2)const;
     friend std::ostream&   operator<<(std::ostream & ost,const Task & obj);
     friend std::istream&   operator>>(std::istream & ost,Task & obj);
+    Task& operator++();
     const Task  operator++(int);
+    bool operator>(const Task& other)const;
+    bool operator<(const Task& other)const;
+    Task&  operator--();
+    const Task operator--(int);
+
   };
 
 #endif
