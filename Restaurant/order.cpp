@@ -1,42 +1,46 @@
 #include <iostream>
 #include <vector>
 #include "dish.h"
-#include "customer.h"
-Customer* m_customer;
-std::vector<Dish*> m_orderedDishes;
-double m_totalPrice;
+#include "order.h"
 
-Order(Customer* customer){
+Order:: Order(Customer* customer){
     m_customer = customer;
 }
-Order(const Order& other){
+
+// Order:: Order(const Order& other){
     
-}
-Order& operator=(const Order& other);
-Order(Order&& other) noexcept{
+// }
+// Order& operator=(const Order& other);  
+Order:: Order(Order&& other) noexcept{
     m_customer = other.m_customer;
     other.m_customer = nullptr;
     m_orderedDishes = std::move(other.m_orderedDishes);
-    m_totalPrice = other.m_totalprice;
+    m_totalPrice = other.m_totalPrice;
     
 }
-Order& operator=(Order&& other) noexcept;
-~Order() {
-    for(int i = 0; i < m_orderedDishes.size(); ++i)
+Order& Order:: operator=(Order&& other) noexcept
+{
+    if(this == &other)
     {
-        delete [] m_orderedDishes[i];
+        exit(-1);
     }
+    m_customer = other.m_customer;
+    other.m_customer = nullptr;
+    m_orderedDishes = std::move(other.m_orderedDishes);
+    m_totalPrice = other.m_totalPrice;
+    return *this;
 }
-void addDish(Dish* dish)
+Order::~Order() {}
+void Order:: addDish(Dish* dish)
 {
     m_orderedDishes.push_back(dish);
     m_totalPrice += dish->getPrice();
 }
-double Totalprice()const
+double Order:: Totalprice()const
 {
     return m_totalPrice;
 }
-void displayOrder() const{
+void Order:: displayOrder() const{
     for(int i = 0; i < m_orderedDishes.size(); ++i)
     {
         m_orderedDishes[i]->display();
